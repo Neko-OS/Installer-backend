@@ -1,0 +1,29 @@
+# Maintainer: Anton Hvornum <anton@hvornum.se>
+# Contributor: demostanis worlds <demostanis@protonmail.com>
+pkgname="archinstall"
+pkgver="2.0.6"
+pkgdesc="Installs launcher scripts for archinstall"
+pkgrel=1
+url="https://github.com/Torxed/archinstall"
+license=('GPLv3')
+provides=("${pkgname}")
+arch=('x86_64')
+source=("${pkgname}-v${pkgver}-x86_64.tar.gz::https://github.com/Torxed/archinstall/archive/v$pkgver.tar.gz")
+depends=('python-archinstall')
+sha256sums=('1a672232194662a90e70b4a5c4a6acfc2c0e027a8fea0699af99110bc17268f5')
+
+package() {
+	mkdir -p "${pkgdir}/usr/bin"
+
+	# Install a guided profile
+	cat - > "${pkgdir}/usr/bin/archinstall" <<EOF
+#!/bin/sh
+
+python -m archinstall $@
+EOF
+
+	chmod +x "${pkgdir}/usr/bin/archinstall"
+}
+
+# vim:ft=sh
+

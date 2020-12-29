@@ -1,0 +1,34 @@
+# Maintainer: Anton Hvornum <anton@hvornum.se>
+# Contributor: demostanis worlds <demostanis@protonmail.com>
+
+pkgname="python-archinstall"
+pkgver="2.0.6"
+pkgdesc="Installs ${pkgname} as a python library."
+pkgrel=1
+url="https://github.com/Torxed/archinstall"
+source=("${pkgname}-v${pkgver}-x86_64.tar.gz::https://github.com/Torxed/archinstall/archive/v$pkgver.tar.gz")
+license=('GPLv3')
+provides=("${pkgname}")
+arch=('x86_64')
+depends=('python>=3.8')
+makedepends=('python-setuptools')
+optdepends=('pyttsx3: Adds text-to-speech support for log/screen output.')
+sha256sums=('1a672232194662a90e70b4a5c4a6acfc2c0e027a8fea0699af99110bc17268f5')
+
+build() {
+	cd "archinstall-${pkgver}"
+
+	python setup.py build
+}
+ 
+package() {
+	cd "archinstall-${pkgver}"
+
+	python setup.py install \
+		--prefix=/usr \
+		--root="${pkgdir}" \
+		--optimize=1
+}
+
+# vim:ft=sh
+
